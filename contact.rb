@@ -10,6 +10,8 @@ class Contact
   # @param name [String] The contact's name
   # @param email [String] The contact's email address
   def initialize(name, email)
+    @name = name
+    @email = email
     # TODO: Assign parameter values to instance variables.
   end
 
@@ -19,13 +21,19 @@ class Contact
     # Opens 'contacts.csv' and creates a Contact object for each line in the file (aka each contact).
     # @return [Array<Contact>] Array of Contact objects
     def all
-      # TODO: Return an Array of Contact instances made from the data in 'contacts.csv'.
+      CSV.foreach('contacts.csv')do |contact|
+        puts "#{$.}: #{contact.join}" 
+      end 
     end
 
     # Creates a new contact, adding it to the csv file, returning the new contact.
     # @param name [String] the new contact's name
     # @param email [String] the contact's email
     def create(name, email)
+      contacts_file = File.open('contacts.csv', 'a')
+      contacts_file.puts "#{name}, #{email}"
+      contacts_file.close
+      puts "Contact was created successfully."
       # TODO: Instantiate a Contact, add its data to the 'contacts.csv' file, and return it.
     end
     
@@ -33,6 +41,7 @@ class Contact
     # @param id [Integer] the contact id
     # @return [Contact, nil] the contact with the specified id. If no contact has the id, returns nil.
     def find(id)
+
       # TODO: Find the Contact in the 'contacts.csv' file with the matching id.
     end
     
