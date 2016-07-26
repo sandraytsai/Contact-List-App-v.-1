@@ -18,17 +18,23 @@ class ContactList
       puts Contact.all
     when "new"
       puts "Full name: "
-      @name = STDIN.gets.chomp
+      name = STDIN.gets.chomp
       puts "E-mail: "
-      @email = STDIN.gets.chomp
-      puts Contact.create(@name,@email)
-
+      email = STDIN.gets.chomp
+      puts Contact.create(name,email)
+    when "show"
+      id = ARGV[1]
+      puts Contact.find(id)
+    when "search"
+      search_term = ARGV[1] 
+      puts Contact.search(search_term)
     else
       self.menu
     end
   end 
 
 end
+
 
 
 ContactList.new.launch_app

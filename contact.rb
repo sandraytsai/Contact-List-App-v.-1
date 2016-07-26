@@ -22,7 +22,7 @@ class Contact
     # @return [Array<Contact>] Array of Contact objects
     def all
       CSV.foreach('contacts.csv')do |contact|
-        puts "#{$.}: #{contact.join}" 
+        puts "#{contact[0]}. #{contact[1]}-- #{contact[2]}"
       end 
     end
 
@@ -30,9 +30,10 @@ class Contact
     # @param name [String] the new contact's name
     # @param email [String] the contact's email
     def create(name, email)
+      contact_list_size = CSV.read('contacts.csv').count
+      @contact_id = contact_list_size + 1
       contacts_file = File.open('contacts.csv', 'a')
-      contacts_file.puts "#{name}, #{email}"
-      contacts_file.close
+      contacts_file.puts "#{@contact_id},#{name},#{email}"
       puts "Contact was created successfully."
       # TODO: Instantiate a Contact, add its data to the 'contacts.csv' file, and return it.
     end
@@ -41,7 +42,14 @@ class Contact
     # @param id [Integer] the contact id
     # @return [Contact, nil] the contact with the specified id. If no contact has the id, returns nil.
     def find(id)
+      CSV.foreach('contacts.csv') do |contact|
+        if id == contact[0]
+          puts "#{contact[0]}. #{contact[1]}-- #{contact[2]}"
+        else 
+         nil  
+        end
 
+      end 
       # TODO: Find the Contact in the 'contacts.csv' file with the matching id.
     end
     
@@ -49,6 +57,14 @@ class Contact
     # @param term [String] the name fragment or email fragment to search for
     # @return [Array<Contact>] Array of Contact objects.
     def search(term)
+      File.foreach('contacts.csv') do |contact|
+        if contact.include?(term)
+          puts contact
+        else 
+          nil
+        end
+          
+      end 
       # TODO: Select the Contact instances from the 'contacts.csv' file whose name or email attributes contain the search term.
     end
 
